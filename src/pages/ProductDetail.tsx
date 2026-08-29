@@ -67,9 +67,9 @@ export default function ProductDetail() {
 
       <div className="grid md:grid-cols-2 gap-8">
         <div className="aspect-square bg-gray-100 rounded-lg flex items-center justify-center">
-          {product.image_url ? (
+          {selectedVariant?.image_url || product.image_url ? (
             <img
-              src={product.image_url}
+              src={selectedVariant?.image_url || product.image_url || ''}
               alt={product.name}
               className="w-full h-full object-cover rounded-lg"
             />
@@ -92,11 +92,10 @@ export default function ProductDetail() {
                     key={v.id}
                     onClick={() => setSelectedVariant(v)}
                     disabled={v.stock_quantity === 0}
-                    className={`px-4 py-2 border rounded-md text-sm ${
-                      selectedVariant?.id === v.id
-                        ? 'border-black bg-black text-white'
-                        : 'border-gray-300 hover:border-gray-500'
-                    } ${v.stock_quantity === 0 ? 'opacity-40 cursor-not-allowed' : ''}`}
+                    className={`px-4 py-2 border rounded-md text-sm ${selectedVariant?.id === v.id
+                      ? 'border-black bg-black text-white'
+                      : 'border-gray-300 hover:border-gray-500'
+                      } ${v.stock_quantity === 0 ? 'opacity-40 cursor-not-allowed' : ''}`}
                   >
                     {[v.color, v.size].filter(Boolean).join(' / ')}
                     {v.stock_quantity === 0 && ' (หมด)'}
